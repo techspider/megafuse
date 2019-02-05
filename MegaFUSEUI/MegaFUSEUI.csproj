@@ -105,6 +105,10 @@
       <Project>{b88951ce-ee3f-4713-9342-44d6630dc13b}</Project>
       <Name>MegaFUSE.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MegaFUSE\MegaFUSE.csproj">
+      <Project>{8a81eb38-d0b7-456c-a0f7-f8dd70d3930b}</Project>
+      <Name>MegaFUSE</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
