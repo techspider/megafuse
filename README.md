@@ -18,6 +18,8 @@ MegaFUSE is licensed under the GNU GPLv3 License. A copy can be found at FSF.org
 
 ## Installing MegaFUSE
 
-In order to install MegaFUSE, you must first install the Dokan FUSE driver. Get it [here](https://github.com/dokan-dev/dokany/releases).
+In order to install MegaFUSE, you must first install the Dokan FUSE driver which is available [here](https://github.com/dokan-dev/dokany/releases).
+
 Once the driver installation has completed, clone this repository and build it using Visual Studio 2017. If the build fails, make sure you have installed all required NuGet packages using the Package Manager Console in VS 2017.
+
 Alternatively, if you do not want to build MegaFUSE from source, download a release once one becomes available.
