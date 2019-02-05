@@ -118,5 +118,33 @@ namespace MegaFUSE.UI
             }
             return flist;
         }
+
+        public override NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, DokanFileInfo info)
+        {
+            if(!FilesystemStruct.ContainsKey(fileName))
+            {
+                MessageBox.Show("yes");
+                bytesRead = 0;
+                return DokanResult.FileNotFound;
+            }
+            if (info.Context == null)
+            {
+                using (var stream = MegaClient.Download(FilesystemStruct[fileName]))
+                {
+                    stream.Position = offset;
+                    bytesRead = stream.Read(buffer, 0, buffer.Length);
+                }
+            }
+            else
+            {
+                var stream = info.Context as Stream;
+                lock (stream)
+                {
+                    stream.Position = offset;
+                    bytesRead = stream.Read(buffer, 0, buffer.Length);
+                }
+            }
+            return DokanResult.Success;
+        }
     }
 }

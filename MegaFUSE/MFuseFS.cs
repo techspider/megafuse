@@ -82,7 +82,8 @@ namespace MegaFUSE
 
         public NtStatus GetFileSecurity(string fileName, out FileSystemSecurity security, AccessControlSections sections, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            security = null;
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus GetVolumeInformation(out string volumeLabel, out FileSystemFeatures features, out string fileSystemName, out uint maximumComponentLength, DokanFileInfo info)
@@ -96,7 +97,7 @@ namespace MegaFUSE
 
         public NtStatus LockFile(string fileName, long offset, long length, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus Mounted(DokanFileInfo info)
@@ -112,12 +113,12 @@ namespace MegaFUSE
 
         public NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return Hook.ReadFile(fileName, buffer, out bytesRead, offset, info);
         }
 
         public NtStatus SetAllocationSize(string fileName, long length, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus SetEndOfFile(string fileName, long length, DokanFileInfo info)
@@ -127,12 +128,12 @@ namespace MegaFUSE
 
         public NtStatus SetFileAttributes(string fileName, FileAttributes attributes, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus SetFileSecurity(string fileName, FileSystemSecurity security, AccessControlSections sections, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus SetFileTime(string fileName, DateTime? creationTime, DateTime? lastAccessTime, DateTime? lastWriteTime, DokanFileInfo info)
@@ -142,7 +143,7 @@ namespace MegaFUSE
 
         public NtStatus UnlockFile(string fileName, long offset, long length, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus Unmounted(DokanFileInfo info)

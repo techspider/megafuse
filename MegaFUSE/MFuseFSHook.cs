@@ -15,5 +15,6 @@ namespace MegaFUSE
         public abstract void OnEject();
         public abstract NtStatus CreateFile(string fileName, FileMode mode, FileAttributes attributes);
         public abstract IList<FileInformation> GetFiles(string fileName);
+        public abstract NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, DokanFileInfo info);
     }
 }
