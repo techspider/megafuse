@@ -1,8 +1,9 @@
 ﻿![MEGAFUSELOGO](megafuse_logo.png "MegaFUSE logo")
 
-An open source implementation of the Mega Cloud service as a FUSE filesystem
+An open source implementation of the Mega Cloud service as a FUSE filesystem for Windows.
 
 ⚠ WARNING: MegaFUSE is still in alpha! Use at your own risk until a beta version has been released!
+⚠ [MegaFuse](https://github.com/matteoserva/MegaFuse) and MegaFUSE are similar in concept but are NOT related!
 
 `"Mega" is a registered trademark of Mega Limited.`
 
