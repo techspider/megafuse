@@ -17,11 +17,16 @@ namespace MegaFUSE.UI
     public class MegaFSHook : MFuseFSHook
     {
         public List<INode> NodeList { get; set; } = new List<INode>();
+        public bool Ready { get; set; } = false;
+        public static MegaFSHook Instance { get; set; }
+        public Dictionary<string, INode> FilesystemStruct { get; set; } = new Dictionary<string, INode>();
 
         public MegaFSHook()
         {
+            Instance = this;
             if (NodeList.Count < 1)
                 NodeList = MegaClient.GetNodes().ToList();
+            FilesystemStruct = Flat23dst(NodeList[0]);
         }
 
         public override MQuotaInformation GetQuota()
@@ -32,11 +37,13 @@ namespace MegaFUSE.UI
         public override void OnMounted()
         {
             MgmtPanel.Instance.PerformSafely(()=> MgmtPanel.Instance.SetFUSEStatus("Mounted", Color.Green));
+            Ready = true;
         }
 
         public override void OnEject()
         {
             MgmtPanel.Instance.PerformSafely(() => MgmtPanel.Instance.SetFUSEStatus("Unmounted", Color.Red));
+            Ready = false;
         }
 
         public override NtStatus CreateFile(string fileName, FileMode mode, FileAttributes attributes)
@@ -44,26 +51,69 @@ namespace MegaFUSE.UI
             return DokanResult.Success;
         }
 
+        public List<INode> GetContents(INode rootNode)
+        {
+            List<INode> nlist = new List<INode>();
+            foreach (var node in NodeList)
+            {
+                if (node.Id == rootNode.Id) continue;
+                if ((node.Type == NodeType.Inbox) || (node.Type == NodeType.Trash)) continue;
+                if (node.ParentId != rootNode.Id) continue;
+                nlist.Add(node);
+                // debug => MessageBox.Show(node.Name);
+            }
+            return nlist;
+        }
+
+        public void RefreshFS()
+        {
+            NodeList = MegaClient.GetNodes().ToList();
+            FilesystemStruct = Flat23dst(NodeList[0]);
+        }
+
+        public Dictionary<string, INode> Flat23dst(INode rootNode)
+        {
+            Dictionary<string, INode> _3dst = new Dictionary<string, INode>();
+            _3dst["\\"] = rootNode;
+            string depth = "";
+            void recursiveRegister(INode dir)
+            {
+                string dname;
+                if (dir.Name == null) dname = "";
+                else dname = dir.Name;
+                depth += "\\" + dname;
+                var contents = GetContents(dir);
+                foreach(var c in contents)
+                {
+                    _3dst[(depth + "\\" + c.Name).Replace("\\\\", "\\")] = c;
+                    if (c.Type == NodeType.Directory) recursiveRegister(c);
+                }
+                depth = depth.Remove(depth.Length - (dname.Length + 1));
+            }
+            recursiveRegister(rootNode);
+            return _3dst;
+        }
+
         public override IList<FileInformation> GetFiles(string fileName)
         {
-            string pname = Path.GetFileName(fileName);
-            INode dirParent = null;
-            if (pname.Trim() == "")
-                dirParent = NodeList[0];
-            else
-                dirParent = NodeList.Single(x => (x.Name == pname) && (x.Type == NodeType.Directory));
-
-            var files = NodeList.Where(x => x.ParentId == dirParent.Id);
             var flist = new List<FileInformation>();
-            foreach(INode f in files)
+            if (!FilesystemStruct.ContainsKey(fileName)) return null;
+            var item = FilesystemStruct[fileName];
+            var contents = GetContents(item);
+            foreach (INode f in contents)
             {
                 FileInformation fi = new FileInformation();
                 fi.FileName = f.Name;
-                if (f.Type == NodeType.Directory) fi.Attributes = FileAttributes.Directory;
+                if (f.Type == NodeType.Directory)
+                {
+                    fi.Attributes = FileAttributes.Directory;
+                    //fi.Length = f.GetFolderSize(MegaClient);
+                }
                 else fi.Attributes = FileAttributes.Normal;
                 fi.CreationTime = f.CreationDate;
                 fi.LastAccessTime = f.ModificationDate;
                 fi.LastWriteTime = f.ModificationDate;
+                fi.Length = f.Size;
                 flist.Add(fi);
             }
             return flist;

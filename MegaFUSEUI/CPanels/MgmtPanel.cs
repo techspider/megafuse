@@ -56,5 +56,15 @@ namespace MegaFUSEUI.CPanels
         {
 
         }
+
+        private void fsUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            if(MegaFSHook.Instance.Ready)
+            {
+                new Thread(() => {
+                    MegaFSHook.Instance.RefreshFS();
+                }).Start();
+            }
+        }
     }
 }

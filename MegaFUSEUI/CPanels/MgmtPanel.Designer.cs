@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.storageLabel = new System.Windows.Forms.Label();
             this.labelFuseStatus = new System.Windows.Forms.Label();
+            this.fsUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // storageLabel
@@ -55,6 +57,12 @@
             this.labelFuseStatus.Text = "FUSE Status: Unknown";
             this.labelFuseStatus.Click += new System.EventHandler(this.labelFuseStatus_Click);
             // 
+            // fsUpdateTimer
+            // 
+            this.fsUpdateTimer.Enabled = true;
+            this.fsUpdateTimer.Interval = 6000;
+            this.fsUpdateTimer.Tick += new System.EventHandler(this.fsUpdateTimer_Tick);
+            // 
             // MgmtPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,5 +82,6 @@
 
         private System.Windows.Forms.Label storageLabel;
         public System.Windows.Forms.Label labelFuseStatus;
+        private System.Windows.Forms.Timer fsUpdateTimer;
     }
 }
