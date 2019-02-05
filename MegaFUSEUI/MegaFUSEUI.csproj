@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{51411228-B032-4824-8CF3-DCF39C391FB1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MegaFUSEUI</RootNamespace>
+    <RootNamespace>MegaFUSE.UI</RootNamespace>
     <AssemblyName>MegaFUSEUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -84,6 +84,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -98,6 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MegaFUSE.UI\MegaFUSE.UI.csproj">
+      <Project>{b88951ce-ee3f-4713-9342-44d6630dc13b}</Project>
+      <Name>MegaFUSE.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

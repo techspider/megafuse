@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaFUSEUI
+namespace MegaFUSE.UI
 {
     public partial class MGFuseUI : Form //singleton
     {

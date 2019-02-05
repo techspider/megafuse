@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaFUSEUI
+namespace MegaFUSE.UI
 {
     internal static class MGFuseMain
     {

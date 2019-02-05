@@ -1,4 +1,4 @@
-﻿namespace MegaFUSEUI
+﻿namespace MegaFUSE.UI
 {
     partial class MGFuseUI
     {
