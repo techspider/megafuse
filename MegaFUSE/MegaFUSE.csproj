@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="MFuseFS.cs" />
     <Compile Include="MFuseFSHook.cs" />
+    <Compile Include="MQuotaInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

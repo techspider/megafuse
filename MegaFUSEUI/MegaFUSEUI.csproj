@@ -68,6 +68,7 @@
     <Compile Include="CPanels\MgmtPanel.Designer.cs">
       <DependentUpon>MgmtPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="MegaFSHook.cs" />
     <Compile Include="MGFuseUI.cs">
       <SubType>Form</SubType>
     </Compile>

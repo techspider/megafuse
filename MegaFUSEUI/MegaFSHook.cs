@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MegaFUSE
+namespace MegaFUSE.UI
 {
-    public abstract class MFuseFSHook
+    public class MegaFSHook : MFuseFSHook
     {
-        public abstract MQuotaInformation GetQuota();
+        
     }
 }
