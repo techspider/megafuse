@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MegaFUSEUI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MegaFUSE User Interface")]
+[assembly: AssemblyDescription("MegaFUSE User Interface")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MegaFUSEUI")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("mr_chainman (techspider)")]
+[assembly: AssemblyProduct("MegaFUSE")]
+[assembly: AssemblyCopyright("Copyright © mr_chainman (techspider) 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

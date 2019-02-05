@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Oxygen-Icons.org-Oxygen-Devices-drive-removable-media.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DokanNet, Version=1.1.2.1, Culture=neutral, PublicKeyToken=cef3dedf553bda55, processorArchitecture=MSIL">
       <HintPath>..\packages\DokanNet.1.1.2.1\lib\net46\DokanNet.dll</HintPath>
@@ -119,6 +122,9 @@
       <Project>{8a81eb38-d0b7-456c-a0f7-f8dd70d3930b}</Project>
       <Name>MegaFUSE</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Oxygen-Icons.org-Oxygen-Devices-drive-removable-media.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
