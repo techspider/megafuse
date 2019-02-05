@@ -45,7 +45,8 @@ namespace MegaFUSE
 
         public NtStatus FindFiles(string fileName, out IList<FileInformation> files, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            files = Hook.GetFiles(fileName);
+            return DokanResult.Success;
         }
 
         public NtStatus FindFilesWithPattern(string fileName, string searchPattern, out IList<FileInformation> files, DokanFileInfo info)
