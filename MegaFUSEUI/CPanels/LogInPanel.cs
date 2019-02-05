@@ -29,25 +29,33 @@ namespace MegaFUSEUI.CPanels
             Application.Exit();
         }
 
-        private void loginBtn_Click(object sender, EventArgs e)
+        public async void Login()
         {
-            MegaClient = new MegaApiClient();
             try
             {
-                MegaClient.Login(usernameInput.Text, passwordInput.Text);
+                await MegaClient.LoginAsync(usernameInput.Text, passwordInput.Text);
+                statusLabel.Text = "Logged in!";
                 MGFuseUI.ShowPanel<MgmtPanel>();
+                return;
             }
-            catch(ApiException ex)
+            catch (ApiException ex)
             {
                 MessageBox.Show("API Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
             catch (Exception)
             {
                 MessageBox.Show("Failed logging in! Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
+            statusLabel.Text = "Login failed!";
+            loginBtn.Enabled = true;
+        }
 
+        private void loginBtn_Click(object sender, EventArgs e)
+        {
+            MegaClient = new MegaApiClient();
+            statusLabel.Text = "Logging in...";
+            loginBtn.Enabled = false;
+            Login();
         }
     }
 }

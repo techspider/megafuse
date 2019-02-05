@@ -36,6 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.loginBtn = new System.Windows.Forms.Button();
             this.quitbtn = new System.Windows.Forms.Button();
+            this.statusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // logInLbl
@@ -117,11 +118,23 @@
             this.quitbtn.UseVisualStyleBackColor = true;
             this.quitbtn.Click += new System.EventHandler(this.quitbtn_Click);
             // 
+            // statusLabel
+            // 
+            this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.statusLabel.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.statusLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(0)))), ((int)(((byte)(7)))));
+            this.statusLabel.Location = new System.Drawing.Point(21, 423);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(350, 23);
+            this.statusLabel.TabIndex = 8;
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // LogInPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.quitbtn);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.label1);
@@ -148,5 +161,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.Button quitbtn;
+        private System.Windows.Forms.Label statusLabel;
     }
 }
