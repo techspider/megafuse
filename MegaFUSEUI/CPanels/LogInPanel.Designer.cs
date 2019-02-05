@@ -97,6 +97,7 @@
             // 
             // loginBtn
             // 
+            this.loginBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.loginBtn.Location = new System.Drawing.Point(305, 449);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(66, 23);
@@ -107,6 +108,7 @@
             // 
             // quitbtn
             // 
+            this.quitbtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.quitbtn.Location = new System.Drawing.Point(233, 449);
             this.quitbtn.Name = "quitbtn";
             this.quitbtn.Size = new System.Drawing.Size(66, 23);

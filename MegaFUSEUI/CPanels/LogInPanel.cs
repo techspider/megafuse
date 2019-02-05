@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static MegaFUSE.UI.MGFuseMain;
 using CG.Web.MegaApiClient;
+using MegaFUSE.UI;
+using MegaFUSE.UI.Controls;
 
 namespace MegaFUSEUI.CPanels
 {
@@ -21,6 +23,9 @@ namespace MegaFUSEUI.CPanels
 
         private void quitbtn_Click(object sender, EventArgs e)
         {
+            if (MegaClient != null)
+                if (MegaClient.IsLoggedIn)
+                    MegaClient.Logout();
             Application.Exit();
         }
 
@@ -30,6 +35,7 @@ namespace MegaFUSEUI.CPanels
             try
             {
                 MegaClient.Login(usernameInput.Text, passwordInput.Text);
+                MGFuseUI.ShowPanel<MgmtPanel>();
             }
             catch(ApiException ex)
             {

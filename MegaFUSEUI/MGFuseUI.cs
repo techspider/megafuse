@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static MegaFUSE.UI.MGFuseMain;
 
 namespace MegaFUSE.UI
 {
@@ -35,6 +36,14 @@ namespace MegaFUSE.UI
         private void MGFuseUI_Load(object sender, EventArgs e)
         {
             ShowPanel<LogInPanel>();
+        }
+
+        private void MGFuseUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MegaClient != null)
+                if (MegaClient.IsLoggedIn)
+                    MegaClient.Logout();
+            Application.Exit();
         }
     }
 }

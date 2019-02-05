@@ -62,6 +62,12 @@
     <Compile Include="CPanels\LogInPanel.Designer.cs">
       <DependentUpon>LogInPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="CPanels\MgmtPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CPanels\MgmtPanel.Designer.cs">
+      <DependentUpon>MgmtPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="MGFuseUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CPanels\LogInPanel.resx">
       <DependentUpon>LogInPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CPanels\MgmtPanel.resx">
+      <DependentUpon>MgmtPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MGFuseUI.resx">
       <DependentUpon>MGFuseUI.cs</DependentUpon>

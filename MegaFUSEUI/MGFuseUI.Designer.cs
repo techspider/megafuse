@@ -42,6 +42,7 @@
             this.Name = "MGFuseUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MegaFUSE";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MGFuseUI_FormClosing);
             this.Load += new System.EventHandler(this.MGFuseUI_Load);
             this.ResumeLayout(false);
 
