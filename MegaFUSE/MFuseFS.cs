@@ -20,12 +20,14 @@ namespace MegaFUSE
 
         public void Cleanup(string fileName, DokanFileInfo info)
         {
-            //TODO implement
+            (info.Context as Stream)?.Dispose();
+            info.Context = null;
         }
 
         public void CloseFile(string fileName, DokanFileInfo info)
         {
-            //TODO implement
+            (info.Context as Stream)?.Dispose();
+            info.Context = null;
         }
 
         public NtStatus CreateFile(string fileName, DokanNet.FileAccess access, FileShare share, FileMode mode, FileOptions options, FileAttributes attributes, DokanFileInfo info)
@@ -35,12 +37,12 @@ namespace MegaFUSE
 
         public NtStatus DeleteDirectory(string fileName, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return Hook.DeleteDir(fileName, info);
         }
 
         public NtStatus DeleteFile(string fileName, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return Hook.DeleteFile(fileName, info);
         }
 
         public NtStatus FindFiles(string fileName, out IList<FileInformation> files, DokanFileInfo info)
@@ -57,12 +59,21 @@ namespace MegaFUSE
 
         public NtStatus FindStreams(string fileName, out IList<FileInformation> streams, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            streams = new FileInformation[0];
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus FlushFileBuffers(string fileName, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ((Stream)(info.Context)).Flush();
+                return DokanResult.Success;
+            }
+            catch (IOException)
+            {
+                return DokanResult.Error;
+            }
         }
 
         public NtStatus GetDiskFreeSpace(out long freeBytesAvailable, out long totalNumberOfBytes, out long totalNumberOfFreeBytes, DokanFileInfo info)
@@ -76,8 +87,7 @@ namespace MegaFUSE
 
         public NtStatus GetFileInformation(string fileName, out FileInformation fileInfo, DokanFileInfo info)
         {
-            fileInfo = new FileInformation();
-            return DokanResult.NotImplemented;
+            return Hook.GetFileInfo(fileName, out fileInfo, info); ;
         }
 
         public NtStatus GetFileSecurity(string fileName, out FileSystemSecurity security, AccessControlSections sections, DokanFileInfo info)
@@ -97,7 +107,7 @@ namespace MegaFUSE
 
         public NtStatus LockFile(string fileName, long offset, long length, DokanFileInfo info)
         {
-            return DokanResult.NotImplemented;
+            return DokanResult.Success;
         }
 
         public NtStatus Mounted(DokanFileInfo info)
@@ -108,7 +118,7 @@ namespace MegaFUSE
 
         public NtStatus MoveFile(string oldName, string newName, bool replace, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return DokanResult.NotImplemented;
         }
 
         public NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, DokanFileInfo info)
@@ -118,17 +128,33 @@ namespace MegaFUSE
 
         public NtStatus SetAllocationSize(string fileName, long length, DokanFileInfo info)
         {
-            return DokanResult.NotImplemented;
+            try
+            {
+                ((Stream)(info.Context)).SetLength(length);
+                return DokanResult.Success;
+            }
+            catch (Exception)
+            {
+                return DokanResult.Error;
+            }
         }
 
         public NtStatus SetEndOfFile(string fileName, long length, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ((Stream)(info.Context)).SetLength(length);
+                return DokanResult.Success;
+            }
+            catch (Exception)
+            {
+                return DokanResult.Error;
+            }
         }
 
         public NtStatus SetFileAttributes(string fileName, FileAttributes attributes, DokanFileInfo info)
         {
-            return DokanResult.NotImplemented;
+            return DokanResult.Success;
         }
 
         public NtStatus SetFileSecurity(string fileName, FileSystemSecurity security, AccessControlSections sections, DokanFileInfo info)
@@ -138,12 +164,19 @@ namespace MegaFUSE
 
         public NtStatus SetFileTime(string fileName, DateTime? creationTime, DateTime? lastAccessTime, DateTime? lastWriteTime, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return Hook.SetFileTime(fileName, creationTime, lastAccessTime, lastWriteTime, info);
         }
 
         public NtStatus UnlockFile(string fileName, long offset, long length, DokanFileInfo info)
         {
-            return DokanResult.NotImplemented;
+            try
+            {
+                return DokanResult.Success;
+            }
+            catch (Exception)
+            {
+                return DokanResult.Error;
+            }
         }
 
         public NtStatus Unmounted(DokanFileInfo info)

@@ -48,6 +48,7 @@ namespace MegaFUSE.UI
 
         public override NtStatus CreateFile(string fileName, FileMode mode, FileAttributes attributes)
         {
+
             return DokanResult.Success;
         }
 
@@ -123,7 +124,6 @@ namespace MegaFUSE.UI
         {
             if(!FilesystemStruct.ContainsKey(fileName))
             {
-                MessageBox.Show("yes");
                 bytesRead = 0;
                 return DokanResult.FileNotFound;
             }
@@ -131,7 +131,14 @@ namespace MegaFUSE.UI
             {
                 using (var stream = MegaClient.Download(FilesystemStruct[fileName]))
                 {
-                    stream.Position = offset;
+                    try
+                    {
+                        stream.Position = offset;
+                    }
+                    catch (Exception)
+                    {
+                        
+                    }
                     bytesRead = stream.Read(buffer, 0, buffer.Length);
                 }
             }
@@ -144,6 +151,53 @@ namespace MegaFUSE.UI
                     bytesRead = stream.Read(buffer, 0, buffer.Length);
                 }
             }
+            return DokanResult.Success;
+        }
+
+        public override NtStatus DeleteDir(string fileName, DokanFileInfo info)
+        {
+            if (!FilesystemStruct.ContainsKey(fileName)) return DokanResult.FileNotFound;
+            if (FilesystemStruct.ContainsKey(fileName) && (FilesystemStruct[fileName].Type == NodeType.File)) return DokanResult.NotADirectory;
+            var dirNode = FilesystemStruct[fileName];
+            MegaClient.Delete(dirNode);
+            FilesystemStruct.Remove(fileName);
+            NodeList.Remove(dirNode);
+            return DokanResult.Success;
+        }
+
+        public override NtStatus DeleteFile(string fileName, DokanFileInfo info)
+        {
+            if (!FilesystemStruct.ContainsKey(fileName)) return DokanResult.FileNotFound;
+            if (FilesystemStruct.ContainsKey(fileName) && (FilesystemStruct[fileName].Type == NodeType.Directory)) return DokanResult.InvalidParameter;
+            var fileNode = FilesystemStruct[fileName];
+            MegaClient.Delete(fileNode);
+            FilesystemStruct.Remove(fileName);
+            NodeList.Remove(fileNode);
+            return DokanResult.Success;
+        }
+
+        public override NtStatus SetFileTime(string fileName, DateTime? creationTime, DateTime? lastAccessTime, DateTime? lastWriteTime, DokanFileInfo info)
+        {
+            if (!FilesystemStruct.ContainsKey(fileName)) return DokanResult.FileNotFound;
+            return NtStatus.Success;
+        }
+
+        public override NtStatus GetFileInfo(string fileName, out FileInformation fileInfo, DokanFileInfo info)
+        {
+            fileInfo = new FileInformation();
+            if (!FilesystemStruct.ContainsKey(fileName)) return DokanResult.FileNotFound;
+            var f = FilesystemStruct[fileName];
+            fileInfo.FileName = f.Name;
+            if (f.Type == NodeType.Directory)
+            {
+                fileInfo.Attributes = FileAttributes.Directory;
+                //fi.Length = f.GetFolderSize(MegaClient);
+            }
+            else fileInfo.Attributes = FileAttributes.Normal;
+            fileInfo.CreationTime = f.CreationDate;
+            fileInfo.LastAccessTime = f.ModificationDate;
+            fileInfo.LastWriteTime = f.ModificationDate;
+            fileInfo.Length = f.Size;
             return DokanResult.Success;
         }
     }
