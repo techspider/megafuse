@@ -20,5 +20,6 @@ namespace MegaFUSE
         public abstract NtStatus DeleteFile(string fileName, DokanFileInfo info);
         public abstract NtStatus SetFileTime(string fileName, DateTime? creationTime, DateTime? lastAccessTime, DateTime? lastWriteTime, DokanFileInfo info);
         public abstract NtStatus GetFileInfo(string fileName, out FileInformation fileInfo, DokanFileInfo info);
+        public abstract NtStatus WriteFile(string fileName, byte[] buffer, out int bytesWritten, long offset, DokanFileInfo info);
     }
 }

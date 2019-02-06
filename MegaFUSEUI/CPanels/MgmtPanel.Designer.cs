@@ -32,6 +32,7 @@
             this.storageLabel = new System.Windows.Forms.Label();
             this.labelFuseStatus = new System.Windows.Forms.Label();
             this.fsUpdateTimer = new System.Windows.Forms.Timer(this.components);
+            this.unmountBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // storageLabel
@@ -52,7 +53,7 @@
             this.labelFuseStatus.ForeColor = System.Drawing.Color.Orange;
             this.labelFuseStatus.Location = new System.Drawing.Point(25, 111);
             this.labelFuseStatus.Name = "labelFuseStatus";
-            this.labelFuseStatus.Size = new System.Drawing.Size(350, 23);
+            this.labelFuseStatus.Size = new System.Drawing.Size(350, 42);
             this.labelFuseStatus.TabIndex = 1;
             this.labelFuseStatus.Text = "FUSE Status: Unknown";
             this.labelFuseStatus.Click += new System.EventHandler(this.labelFuseStatus_Click);
@@ -63,11 +64,29 @@
             this.fsUpdateTimer.Interval = 6000;
             this.fsUpdateTimer.Tick += new System.EventHandler(this.fsUpdateTimer_Tick);
             // 
+            // unmountBtn
+            // 
+            this.unmountBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.unmountBtn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.unmountBtn.Enabled = false;
+            this.unmountBtn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.unmountBtn.FlatAppearance.BorderSize = 0;
+            this.unmountBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.unmountBtn.Font = new System.Drawing.Font("Verdana", 10F);
+            this.unmountBtn.Location = new System.Drawing.Point(25, 153);
+            this.unmountBtn.Name = "unmountBtn";
+            this.unmountBtn.Size = new System.Drawing.Size(350, 30);
+            this.unmountBtn.TabIndex = 2;
+            this.unmountBtn.Text = "Unmount FUSE";
+            this.unmountBtn.UseVisualStyleBackColor = false;
+            this.unmountBtn.Click += new System.EventHandler(this.unmountBtn_Click);
+            // 
             // MgmtPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.unmountBtn);
             this.Controls.Add(this.labelFuseStatus);
             this.Controls.Add(this.storageLabel);
             this.Name = "MgmtPanel";
@@ -83,5 +102,6 @@
         private System.Windows.Forms.Label storageLabel;
         public System.Windows.Forms.Label labelFuseStatus;
         private System.Windows.Forms.Timer fsUpdateTimer;
+        private System.Windows.Forms.Button unmountBtn;
     }
 }

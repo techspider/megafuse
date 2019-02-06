@@ -200,5 +200,42 @@ namespace MegaFUSE.UI
             fileInfo.Length = f.Size;
             return DokanResult.Success;
         }
+
+        public override NtStatus WriteFile(string fileName, byte[] buffer, out int bytesWritten, long offset, DokanFileInfo info)
+        {
+            if (!FilesystemStruct.ContainsKey(fileName))
+            {
+                bytesWritten = 0;
+                return DokanResult.FileNotFound;
+            }
+            if (info.Context == null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    try
+                    {
+                        MegaClient.Upload(stream, Path.GetFileName("R:" + fileName), NodeList.Single(x => x.Id == FilesystemStruct[fileName].ParentId));
+                        stream.Position = offset;
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    bytesWritten = (int)stream.Length;
+                    stream.Write(buffer, 0, buffer.Length);
+                }
+            }
+            else
+            {
+                var stream = info.Context as Stream;
+                lock (stream)
+                {
+                    stream.Position = offset;
+                    stream.Write(buffer, 0, buffer.Length);
+                    bytesWritten = (int)stream.Length;
+                }
+            }
+            return DokanResult.Success;
+        }
     }
 }

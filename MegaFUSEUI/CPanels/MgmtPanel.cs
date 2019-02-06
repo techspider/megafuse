@@ -17,6 +17,7 @@ namespace MegaFUSEUI.CPanels
     public partial class MgmtPanel : UserControl
     {
         public static MgmtPanel Instance { get; set; }
+        public char DriveLetter { get; set; } = 'S';
 
         public MgmtPanel()
         {
@@ -39,7 +40,7 @@ namespace MegaFUSEUI.CPanels
             storageLabel.Text = (static_quota_max/1024/1024/1024) + " GB total\n" + (dynamic_quota_used/1024/1024/1024) + " GB used\n" + (dynamic_quota_free/1024/1024/1024) + " GB free";
             //Mount FUSE
             //dokan mount
-            new Thread(()=> { Dokan.Mount(new MegaFUSE.MFuseFS(new MegaFSHook()), "S:\\", DokanOptions.FixedDrive, 5, null); }).Start();
+            new Thread(()=> { this.PerformSafely(() => { unmountBtn.Enabled = true; }); Dokan.Mount(new MegaFUSE.MFuseFS(new MegaFSHook()), DriveLetter.ToString() + ":\\", DokanOptions.FixedDrive, 5, null);  }).Start();
         }
 
         private void MgmtPanel_Load(object sender, EventArgs e)
@@ -65,6 +66,14 @@ namespace MegaFUSEUI.CPanels
                     MegaFSHook.Instance.RefreshFS();
                 }).Start();
             }
+        }
+
+        private void unmountBtn_Click(object sender, EventArgs e)
+        {
+            unmountBtn.Enabled = false;
+            SetFUSEStatus("Unmounting...", Color.Orange);
+            Dokan.Unmount(DriveLetter);
+            SetFUSEStatus("Unmounted.", Color.Red);
         }
     }
 }

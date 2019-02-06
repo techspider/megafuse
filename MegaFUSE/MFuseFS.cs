@@ -187,7 +187,7 @@ namespace MegaFUSE
 
         public NtStatus WriteFile(string fileName, byte[] buffer, out int bytesWritten, long offset, DokanFileInfo info)
         {
-            throw new NotImplementedException();
+            return Hook.WriteFile(fileName, buffer, out bytesWritten, offset, info);
         }
     }
 }
